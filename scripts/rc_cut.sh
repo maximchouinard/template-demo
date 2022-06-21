@@ -1,3 +1,29 @@
+welcome(){
+  printf "                                               \n"
+  printf "                                               \n"
+  printf "                  ╓▄▄▓███▓▓▄▄                  \n"
+  printf "              ╓▓████████████████▄              \n"
+  printf "            ▄█████████████████████▀            \n"
+  printf "          ╓███████▀╙       └╙▀██▀              \n"
+  printf "         ▄██████¬                              \n"
+  printf "        ]█████▌                                \n"
+  printf "        ██████          ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓µ      \n"
+  printf "        █████▌          ████████████████▌      \n"
+  printf "        █████▌          ████████████████▌      \n"
+  printf "        ╟█████                  ▓███████▌      \n"
+  printf "         ██████▄               ▓████████▌      \n"
+  printf "          ▀██████▄          ╓▓██████████▌      \n"
+  printf "           ╙██████████▓▓██████████ █████▌      \n"
+  printf "             └▀████████████████▀   █████▌      \n"
+  printf "                 │╠╠▀▀▀▀▀▀▀╙│░░░░░░▀▀▀▀▀▀░░░   \n"
+  printf "     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   \n"
+  printf "     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   \n"
+  printf "     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░             \n"
+  printf "     ░░░░░░░░                                  \n"
+  printf "                                               \n"
+  printf "                                               \n"
+}
+
 create_rc_branch() {
   refresh_branch_state
   branch_name="release/goto${month}${full_day}${year}"
@@ -12,6 +38,8 @@ create_rc_branch() {
 }
 
 refresh_branch_state() {
+  printf "\n"
+  printf "Checkout base branch : ${base_branch} \n"
   clean_command=$(git clean -dfx)
   checkout_command=$(git checkout ${base_branch})
   pull_command=$(git pull origin ${base_branch})
@@ -58,5 +86,6 @@ month="$(date +'%B')"
 day="$(date +'%d')"
 full_day=$(format_day)
 year="$(date +'%G')" 
+welcome
 create_rc_branch
 #pull_request
