@@ -29,6 +29,7 @@ create_rc_branch() {
   branch_name="release/goto${month}${full_day}${year}"
   printf "\n"
   printf "RC branch creation : ${month} ${year} \n"
+  printf "----------------------------------------------------"
   read -p "Are you sure you want to create the branch: '${branch_name}'?" -n 1 -r
   echo    # (optional) move to a new line
   if [[ $REPLY =~ ^[Yy]$ ]]; then
@@ -40,6 +41,7 @@ create_rc_branch() {
 refresh_branch_state() {
   printf "\n"
   printf "Checkout base branch : ${base_branch} \n"
+  printf "----------------------------------------------------"
   clean_command=$(git clean -dfx)
   checkout_command=$(git checkout ${base_branch})
   pull_command=$(git pull origin ${base_branch})
