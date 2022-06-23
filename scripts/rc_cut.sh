@@ -36,11 +36,11 @@ print_separator() {
 }
 
 print_check_mark() {
-  printf "${GREEN}\xE2\x9C\x94${NC}\n"
+  printf " ${GREEN}\xE2\x9C\x94${NC}\n"
 }
 
 print_cross() {
-  printf "${RED}\xE2\x9D\x8C${NC}\n"
+  printf " ${RED}\xE2\x9D\x8C${NC}\n"
 }
 
 create_rc_branch() {
@@ -63,18 +63,29 @@ refresh_branch_state() {
   printf "\n"
 
   if `git diff-index --quiet HEAD --`; then
-    # No changes
-    $(git clean -dfx > /dev/null)
-    clean_command="deleting untracked files: ${GREEN}\xE2\x9C\x94${NC}"
-    printf "${clean_command}\n"
-    $(git checkout ${base_branch} > /dev/null)
-    checkout_command="checking out main branch: ${GREEN}\xE2\x9C\x94${NC}"
-    printf "${checkout_command}\n"
-    $(git pull origin ${base_branch} > /dev/null)
-    pull_command="Pulling latest code"
+    clean_command="checking out main branch:"
+    printf "${clean_command}"
+    if `git clean -dfx > /dev/null` ; then
+        print_check_mark
+    else
+        print_cross
+    fi
+    
+    checkout_command="checking out main branch:"
+    printf "${checkout_command}"
+    if `git checkout ${base_branch} > /dev/null` ; then
+        print_check_mark
+    else
+        print_cross
+    fi
+    
+    pull_command="pull code from origin:"
     printf "${pull_command}"
-    print_check_mark
-    print_cross
+    if `git pull origin ${base_branch} > /dev/null` ; then
+        print_check_mark
+    else
+        print_cross
+    fi
   else
     printf "\n"
     printf "${RED}▀▀▀▀▀${NC}\n"
