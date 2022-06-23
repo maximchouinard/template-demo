@@ -56,8 +56,7 @@ refresh_branch_state() {
 
   if `git diff-index --quiet HEAD --`; then
     # No changes
-    clean_command=$(git clean -dfx > /dev/null)
-    printf "${clean_command}"
+    $(git clean -dfx > /dev/null)
     clean_command="deleting untracked files: ${GREEN}\xE2\x9C\x94${NC}"
     printf "${clean_command}"
     checkout_command=$(git checkout ${base_branch} > /dev/null)
