@@ -35,6 +35,14 @@ print_separator() {
   printf "${YELLOW}▀▀▀▀▀${NC}\n"
 }
 
+print_check_mark() {
+  printf "${GREEN}\xE2\x9C\x94${NC}\n"
+}
+
+print_cross() {
+  printf "${RED}\xE2\x9D\x8C${NC}\n"
+}
+
 create_rc_branch() {
   refresh_branch_state
   branch_name="release/goto${month}${full_day}${year}"
@@ -63,8 +71,8 @@ refresh_branch_state() {
     checkout_command="checking out main branch: ${GREEN}\xE2\x9C\x94${NC}"
     printf "${checkout_command}\n"
     $(git pull origin ${base_branch} > /dev/null)
-    pull_command="Pulling latest code: ${GREEN}\xE2\x9C\x94${NC}"
-    printf "${pull_command}\n"
+    pull_command="Pulling latest code"
+    printf "${pull_command}${print_check_mark}${print_cross}\n"
   else
     printf "\n"
     printf "${RED}▀▀▀▀▀${NC}\n"
