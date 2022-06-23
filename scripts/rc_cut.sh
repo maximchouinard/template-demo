@@ -54,10 +54,11 @@ refresh_branch_state() {
   printf "Checkout base branch : ${base_branch} \n"
   printf "\n"
 
-  CHANGED=$(git diff-index --name-only HEAD --)
   if `git diff-index --quiet HEAD --`; then
     # No changes
-    printf "no changes"
+    clean_command=$(git clean -dfx > /dev/null)
+    checkout_command=$(git checkout ${base_branch} > /dev/null)
+    pull_command=$(git pull origin ${base_branch} > /dev/null)
   else
     printf "\n"
     printf "${RED}▀▀▀▀▀${NC}\n"
@@ -69,13 +70,7 @@ refresh_branch_state() {
     printf "\n"
     exit 0
   fi
-
-  clean_command=$(git clean -dfx)
-  printf "${clean_command}"
-  checkout_command=$(git checkout ${base_branch})
-  printf "${checkout_command}"
-  pull_command=$(git pull origin ${base_branch})
-  printf "${pull_command}"
+  
 }
 
 pull_request() {
