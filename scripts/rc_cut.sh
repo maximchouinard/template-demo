@@ -72,7 +72,9 @@ refresh_branch_state() {
     printf "${checkout_command}\n"
     $(git pull origin ${base_branch} > /dev/null)
     pull_command="Pulling latest code"
-    printf "${pull_command}${print_check_mark}${print_cross}\n"
+    printf "${pull_command}\n"
+    print_check_mark
+    print_cross
   else
     printf "\n"
     printf "${RED}▀▀▀▀▀${NC}\n"
