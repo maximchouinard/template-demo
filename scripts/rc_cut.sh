@@ -59,6 +59,7 @@ refresh_branch_state() {
     clean_command=$(git clean -dfx > /dev/null)
     printf "${clean_command}"
     clean_command="deleting untracked files: ${GREEN}\xE2\x9C\x94${NC}"
+    printf "${clean_command}"
     checkout_command=$(git checkout ${base_branch} > /dev/null)
     pull_command=$(git pull origin ${base_branch} > /dev/null)
   else
