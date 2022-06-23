@@ -61,9 +61,10 @@ refresh_branch_state() {
     printf "${clean_command}\n"
     $(git checkout ${base_branch} > /dev/null)
     checkout_command="checking out main branch: ${GREEN}\xE2\x9C\x94${NC}"
-    printf "${clean_command}\n"
+    printf "${checkout_command}\n"
     $(git pull origin ${base_branch} > /dev/null)
     pull_command="Pulling latest code: ${GREEN}\xE2\x9C\x94${NC}"
+    printf "${pull_command}\n"
   else
     printf "\n"
     printf "${RED}▀▀▀▀▀${NC}\n"
