@@ -1,7 +1,13 @@
+
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
 welcome(){
   printf "                                               \n"
   printf "                                               \n"
-  printf "                  ╓▄▄▓███▓▓▄▄                  \n"
+  printf "                  ${GREEN}╓▄▄▓███▓▓▄▄                  \n"
   printf "              ╓▓████████████████▄              \n"
   printf "            ▄█████████████████████▀            \n"
   printf "          ╓███████▀╙       └╙▀██▀              \n"
@@ -15,18 +21,18 @@ welcome(){
   printf "          ▀██████▄          ╓▓██████████▌      \n"
   printf "           ╙██████████▓▓██████████ █████▌      \n"
   printf "             └▀████████████████▀   █████▌      \n"
-  printf "                 │╠╠▀▀▀▀▀▀▀╙│░░░░░░▀▀▀▀▀▀░░░   \n"
-  printf "     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   \n"
+  printf "                 │╠╠▀▀▀▀▀▀▀╙│${YELLOW}░░░░░░${GREEN}▀▀▀▀▀▀${YELLOW}░░░${NC}   \n"
+  printf "     ${YELLOW}░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   \n"
   printf "     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   \n"
   printf "     ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░             \n"
-  printf "     ░░░░░░░░                                  \n"
+  printf "     ░░░░░░░░${NC}                                  \n"
   printf "                                               \n"
   printf "                                               \n"
 }
 
 print_separator() {
   printf "\n"
-  printf "▀▀▀▀▀\n"
+  printf "${YELLOW}▀▀▀▀▀${NC}\n"
 }
 
 create_rc_branch() {
@@ -47,9 +53,29 @@ refresh_branch_state() {
   print_separator
   printf "Checkout base branch : ${base_branch} \n"
   printf "\n"
+
+  CHANGED=$(git diff-index --name-only HEAD --)
+  if `git diff-index --quiet HEAD --`; then
+    # No changes
+    printf "no changes"
+  else
+    printf "\n"
+    printf "${RED}▀▀▀▀▀${NC}\n"
+    printf "Your local repository has changes in it that prevent running this script\n"
+    printf "\n"
+    printf "Possible solution:\n"
+    printf "\n"
+    printf "    $ git checkout .\n"
+    printf "\n"
+    exit 0
+  fi
+
   clean_command=$(git clean -dfx)
+  printf "${clean_command}"
   checkout_command=$(git checkout ${base_branch})
+  printf "${checkout_command}"
   pull_command=$(git pull origin ${base_branch})
+  printf "${pull_command}"
 }
 
 pull_request() {
