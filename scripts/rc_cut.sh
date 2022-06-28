@@ -1,4 +1,4 @@
-
+# Color
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
@@ -65,7 +65,7 @@ refresh_branch_state() {
   if `git diff-index --quiet HEAD --`; then
     clean_command="deleting untracked files:"
     printf "${clean_command}"
-    seq 1 1000000 | while read i; do echo -en "\r$i"; done
+
     if `git clean -dfx > /dev/null` ; then
         print_check_mark
     else
@@ -91,11 +91,6 @@ refresh_branch_state() {
     printf "\n"
     printf "${RED}▀▀▀▀▀${NC}\n"
     printf "Your local repository has changes in it that prevent running this script\n"
-    printf "\n"
-    printf "Possible solution:\n"
-    printf "\n"
-    printf "    $ git checkout .\n"
-    printf "\n"
     exit 0
   fi
   
