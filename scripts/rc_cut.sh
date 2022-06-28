@@ -36,11 +36,11 @@ print_separator() {
 }
 
 print_check_mark() {
-  printf " ${GREEN}\xE2\x9C\x94${NC}\n"
+  " ${GREEN}\xE2\x9C\x94${NC}\n"
 }
 
 print_cross() {
-  printf " ${RED}\xE2\x9D\x8C${NC}\n"
+  " ${RED}\xE2\x9D\x8C${NC}\n"
 }
 
 create_rc_branch() {
