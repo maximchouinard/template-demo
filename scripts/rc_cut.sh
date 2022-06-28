@@ -66,25 +66,25 @@ refresh_branch_state() {
     clean_command="deleting untracked files:"
 
     if `git clean -dfx > /dev/null` ; then
-        printf "${clean_command}" print_check_mark
+        printf "${clean_command} ${print_check_mark}" 
     else
-        printf "${clean_command}" print_cross
+        printf "${clean_command} ${print_cross}"
     fi
     
     checkout_command="checking out main branch:"
     
     if `git checkout ${base_branch} > /dev/null` ; then
-        printf "${checkout_command}" print_check_mark
+        printf "${checkout_command} ${print_check_mark}"
     else
-        printf "${checkout_command}" print_cross
+        printf "${checkout_command} ${print_cross}" 
     fi
     
     pull_command="pull code from origin:"
     
     if `git pull origin ${base_branch} > /dev/null` ; then
-        printf "${pull_command}" print_check_mark
+        printf "${pull_command} ${print_check_mark}"
     else
-        printf "${pull_command}" print_cross
+        printf "${pull_command} ${print_cross}"
     fi
   else
     printf "\n"
