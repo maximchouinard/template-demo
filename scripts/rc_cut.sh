@@ -137,6 +137,7 @@ refresh_branch_state() {
 
 bump_version() {
   echo "${next_version}"
+  jq `.version = "${next_version}"` package.json > tmp.$$.json && mv tmp.$$.json package.json
   # jq '.version = "${next_version}"'
 }
 
