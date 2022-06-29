@@ -30,6 +30,40 @@ welcome(){
   printf "                                               \n"
 }
 
+prerequisite() {
+  print_separator
+  printf "Tooling \n"
+  printf "\n"
+  install_brew
+  install_jq
+}
+
+install_brew() {
+  if ! command -v brew &> /dev/null
+  then
+    printf "brew could not be found"
+    print_cross
+    printf "Installing brew"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  else
+    printf "brew"
+    print_check_mark
+  fi
+}
+
+install_jq() {
+  if ! command -v jq &> /dev/null
+  then
+    printf "jq could not be found"
+    print_cross
+    printf "Installing jq"
+    brew install jq
+  else
+    printf "jq"
+    print_check_mark
+  fi
+}
+
 print_separator() {
   printf "\n"
   printf "${YELLOW}▀▀▀▀▀${NC}\n"
@@ -101,6 +135,10 @@ refresh_branch_state() {
   
 }
 
+bump_version() {
+  jq '.key1 = "new-value1"'
+}
+
 pull_request() {
   # try the upstream branch if possible, otherwise origin will do
   upstream=$(git config --get remote.upstream.url)
@@ -143,5 +181,6 @@ day="$(date +'%d')"
 full_day=$(format_day)
 year="$(date +'%G')" 
 welcome
+prerequisite
 create_rc_branch
 #pull_request
