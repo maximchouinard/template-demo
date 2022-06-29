@@ -136,7 +136,8 @@ refresh_branch_state() {
 }
 
 bump_version() {
-  jq '.key1 = "new-value1"'
+  echo next_version
+  # jq '.version = "${next_version}"'
 }
 
 pull_request() {
@@ -177,6 +178,7 @@ format_day() {
 
 base_branch="develop"
 month="$(date +'%B')"
+next_version="$(date + '%Y.%m')"
 day="$(date +'%d')"
 full_day=$(format_day)
 year="$(date +'%G')" 
