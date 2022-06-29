@@ -99,7 +99,7 @@ refresh_branch_state() {
   if `git diff-index --quiet HEAD --`; then
     clean_command="deleting untracked files:"
 
-    if `git clean -dfx > /dev/null` ; then
+    if `git clean -dfx &> /dev/null` ; then
         printf "${clean_command}"
         print_check_mark 
     else
@@ -109,7 +109,7 @@ refresh_branch_state() {
     
     checkout_command="checking out main branch:"
     
-    if `git checkout ${base_branch} > /dev/null` ; then
+    if `git checkout ${base_branch} &> /dev/null` ; then
         printf "${checkout_command}"
         print_check_mark
     else
@@ -119,7 +119,7 @@ refresh_branch_state() {
     
     pull_command="pull code from origin:"
     
-    if `git pull origin ${base_branch} > /dev/null` ; then
+    if `git pull origin ${base_branch} &> /dev/null` ; then
         printf "${pull_command}"
         print_check_mark
     else
