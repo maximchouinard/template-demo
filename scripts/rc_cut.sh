@@ -136,7 +136,7 @@ refresh_branch_state() {
 }
 
 bump_version() {
-  echo next_version
+  echo "${next_version}"
   # jq '.version = "${next_version}"'
 }
 
@@ -178,11 +178,12 @@ format_day() {
 
 base_branch="develop"
 month="$(date +'%B')"
-next_version="$(date + '%Y.%m')"
+next_version="$(date +'%G.%m')"
 day="$(date +'%d')"
 full_day=$(format_day)
 year="$(date +'%G')" 
 welcome
 prerequisite
+bump_version
 create_rc_branch
 #pull_request
