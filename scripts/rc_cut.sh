@@ -136,6 +136,7 @@ refresh_branch_state() {
 }
 
 bump_version() {
+  refresh_branch_state
   print_separator
   printf "Updating app version \n"
   printf "\n"
