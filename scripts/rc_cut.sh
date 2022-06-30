@@ -183,9 +183,9 @@ bump_version() {
         print_cross
     fi
 
-    commit_command="Commit version change:"
+    commit_command="Commit change:"
     
-    if `git commit -am "updating version to ${next_version}"` ; then
+    if `git commit -am "chore: updating version to ${next_version}" &> /dev/null` ; then
         printf "${commit_command}"
         print_check_mark
     else
@@ -195,7 +195,7 @@ bump_version() {
 
     push_command="Push branch chore/app-version-${next_version_branch}"
     
-    if `git push --set-upstream origin chore/app-version-${next_version_branch}` ; then
+    if `git push --set-upstream origin chore/app-version-${next_version_branch} &> /dev/null` ; then
         printf "${push_command}"
         print_check_mark
     else
