@@ -182,7 +182,7 @@ bump_version() {
 
     replace_command="Replace version(${previous_version}) => (${next_version}):"
     
-    if eval "sed -i "" "s/${previous_version}/${next_version}/g" package.json &> /dev/null" ; then
+    if eval "sed -i \"\" \"s/${previous_version}/${next_version}/g\" package.json &> /dev/null" ; then
         printf "${replace_command}"
         print_check_mark
     else
@@ -193,7 +193,7 @@ bump_version() {
 
     commit_command="Commit change:"
     
-    if eval "git commit -am "chore: updating version to ${next_version}" &> /dev/null" ; then
+    if eval "git commit -am \"chore: updating version to ${next_version}\" &> /dev/null" ; then
         printf "${commit_command}"
         print_check_mark
     else
