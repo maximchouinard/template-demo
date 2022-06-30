@@ -219,7 +219,7 @@ pull_request() {
 
   to_user=$(echo $upstream | sed -e 's/.*[\/:]\([^/]*\)\/[^/]*$/\1/')
   from_user=$(echo $origin | sed -e 's/.*[\/:]\([^/]*\)\/[^/]*$/\1/')
-  repo=$(basename `git rev-parse --show-toplevel`)
+  repo=$(basename "git rev-parse --show-toplevel")
   from_branch=$(git rev-parse --abbrev-ref HEAD)
   open "https://github.com/$to_user/$repo/pull/new/$to_user:$base_branch...$from_user:$from_branch"
 }
