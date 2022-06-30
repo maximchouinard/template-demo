@@ -89,7 +89,7 @@ create_rc_branch() {
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     checkout_command="Checkout branch ${branch_name}:"
 
-    if `git checkout -b ${branch_name} &> /dev/null` ; then
+    if eval "git checkout -b ${branch_name} &> /dev/null" ; then
         printf "${checkout_command}"
         print_check_mark 
     else
@@ -99,7 +99,7 @@ create_rc_branch() {
 
     push_command="Push branch ${branch_name}:"
 
-    if `git push --set-upstream origin ${branch_name} &> /dev/null` ; then
+    if eval "git push --set-upstream origin ${branch_name} &> /dev/null" ; then
         printf "${push_command}"
         print_check_mark 
     else
@@ -114,10 +114,10 @@ refresh_branch_state() {
   printf "Checkout base branch : ${base_branch} \n"
   printf "\n"
 
-  if `git diff-index --quiet HEAD --`; then
+  if eval "git diff-index --quiet HEAD --"; then
     clean_command="deleting untracked files:"
 
-    if `git clean -dfx &> /dev/null` ; then
+    if eval "git clean -dfx &> /dev/null" ; then
         printf "${clean_command}"
         print_check_mark 
     else
@@ -127,7 +127,7 @@ refresh_branch_state() {
     
     checkout_command="checking out main branch:"
     
-    if `git checkout ${base_branch} &> /dev/null` ; then
+    if eval "git checkout ${base_branch} &> /dev/null" ; then
         printf "${checkout_command}"
         print_check_mark
     else
@@ -137,7 +137,7 @@ refresh_branch_state() {
     
     pull_command="pull code from origin:"
     
-    if `git pull origin ${base_branch} &> /dev/null` ; then
+    if eval "git pull origin ${base_branch} &> /dev/null" ; then
         printf "${pull_command}"
         print_check_mark
     else
@@ -166,7 +166,7 @@ bump_version() {
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     checkout_command="Checkout feature branch chore/app-version-${next_version_branch}:"
     
-    if `git checkout -b chore/app-version-${next_version_branch} &> /dev/null` ; then
+    if eval "git checkout -b chore/app-version-${next_version_branch} &> /dev/null" ; then
         printf "${checkout_command}"
         print_check_mark
     else
@@ -176,7 +176,7 @@ bump_version() {
 
     replace_command="Replace version(${previous_version}) => (${next_version}):"
     
-    if `sed -i "" "s/${previous_version}/${next_version}/g" package.json &> /dev/null` ; then
+    if eval "sed -i "" "s/${previous_version}/${next_version}/g" package.json &> /dev/null" ; then
         printf "${replace_command}"
         print_check_mark
     else
@@ -186,7 +186,7 @@ bump_version() {
 
     commit_command="Commit change:"
     
-    if `git commit -am "chore: updating version to ${next_version}" &> /dev/null` ; then
+    if eval "git commit -am "chore: updating version to ${next_version}" &> /dev/null" ; then
         printf "${commit_command}"
         print_check_mark
     else
@@ -196,7 +196,7 @@ bump_version() {
 
     push_command="Push branch chore/app-version-${next_version_branch}"
     
-    if `git push --set-upstream origin chore/app-version-${next_version_branch} &> /dev/null` ; then
+    if eval "git push --set-upstream origin chore/app-version-${next_version_branch} &> /dev/null" ; then
         printf "${push_command}"
         print_check_mark
     else
