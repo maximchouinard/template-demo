@@ -1,4 +1,5 @@
-# Color
+#!/usr/bin/env bash
+
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
@@ -81,7 +82,7 @@ create_rc_branch() {
   refresh_branch_state
   branch_name="release/goto${month}${full_day}${year}"
   print_separator
-  printf "RC branch creation : ${month} ${year} \n"
+  printf "RC branch creation : %s %s \n" "$month" "$year"
   printf "\n"
   read -p "Are you sure you want to create the branch: '${branch_name}'?" -n 1 -r
   echo    # (optional) move to a new line
