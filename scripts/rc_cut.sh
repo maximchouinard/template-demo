@@ -86,8 +86,25 @@ create_rc_branch() {
   read -p "Are you sure you want to create the branch: '${branch_name}'?" -n 1 -r
   echo    # (optional) move to a new line
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    checkout_command=$(git checkout -b ${branch_name})
-    push_command=$(git push --set-upstream origin ${branch_name})
+    checkout_command="Checkout branch ${branch_name}:"
+
+    if `git checkout -b ${branch_name} &> /dev/null` ; then
+        printf "${checkout_command}"
+        print_check_mark 
+    else
+        printf "${checkout_command}"
+        print_cross
+    fi
+
+    push_command="Push branch ${branch_name}:"
+
+    if `git push --set-upstream origin ${branch_name} &> /dev/null` ; then
+        printf "${push_command}"
+        print_check_mark 
+    else
+        printf "${push_command}"
+        print_cross
+    fi
   fi
 }
 
@@ -146,10 +163,46 @@ bump_version() {
   read -p "Are you sure you want to replace version \"${previous_version}\" by \"${next_version}\"?" -n 1 -r
   echo    # (optional) move to a new line
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    checkout_command=$(git checkout -b chore/app-version-${next_version_branch})
-    sed -i "" "s/${previous_version}/${next_version}/g" package.json
-    commit_command=$(git commit -am "updating version to ${next_version}")
-    push_command=$(git push --set-upstream origin chore/app-version-${next_version_branch})
+    checkout_command="Checkout feature branch chore/app-version-${next_version_branch}:"
+    
+    if `git checkout -b chore/app-version-${next_version_branch} &> /dev/null` ; then
+        printf "${checkout_command}"
+        print_check_mark
+    else
+        printf "${checkout_command}"
+        print_cross
+    fi
+
+    replace_command="Replace version(${previous_version}) => (${next_version}):"
+    
+    if `sed -i "" "s/${previous_version}/${next_version}/g" package.json &> /dev/null` ; then
+        printf "${replace_command}"
+        print_check_mark
+    else
+        printf "${replace_command}"
+        print_cross
+    fi
+
+    commit_command="Commit version change:"
+    
+    if `git commit -am "updating version to ${next_version}"` ; then
+        printf "${commit_command}"
+        print_check_mark
+    else
+        printf "${commit_command}"
+        print_cross
+    fi
+
+    push_command="Push branch chore/app-version-${next_version_branch}"
+    
+    if `git push --set-upstream origin chore/app-version-${next_version_branch}` ; then
+        printf "${push_command}"
+        print_check_mark
+    else
+        printf "${push_command}"
+        print_cross
+    fi
+    
     pull_request
   fi
   
@@ -193,13 +246,14 @@ format_day() {
 
 base_branch="develop"
 month="$(date +'%B')"
-faketime '2019-10-01' date
 next_version="$(date -v+1m +'%G.%m')"
 next_version_branch="$(date -v+1m +'%G-%m')"
 day="$(date +'%d')"
 full_day=$(format_day)
 year="$(date +'%G')" 
+
 welcome
 prerequisite
+
 create_rc_branch
 bump_version
