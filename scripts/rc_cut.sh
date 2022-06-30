@@ -95,6 +95,7 @@ create_rc_branch() {
     else
         printf "${checkout_command}"
         print_cross
+        exit 0
     fi
 
     push_command="Push branch ${branch_name}:"
@@ -105,6 +106,7 @@ create_rc_branch() {
     else
         printf "${push_command}"
         print_cross
+        exit 0
     fi
   fi
 }
@@ -123,6 +125,7 @@ refresh_branch_state() {
     else
         printf "${clean_command}"
         print_cross
+        exit 0
     fi
     
     checkout_command="checking out main branch:"
@@ -133,6 +136,7 @@ refresh_branch_state() {
     else
         printf "${checkout_command}" 
         print_cross
+        exit 0
     fi
     
     pull_command="pull code from origin:"
@@ -143,6 +147,7 @@ refresh_branch_state() {
     else
         printf "${pull_command}"
         print_cross
+        exit 0
     fi
   else
     printf "\n"
@@ -172,6 +177,7 @@ bump_version() {
     else
         printf "${checkout_command}"
         print_cross
+        exit 0
     fi
 
     replace_command="Replace version(${previous_version}) => (${next_version}):"
@@ -182,6 +188,7 @@ bump_version() {
     else
         printf "${replace_command}"
         print_cross
+        exit 0
     fi
 
     commit_command="Commit change:"
@@ -192,6 +199,7 @@ bump_version() {
     else
         printf "${commit_command}"
         print_cross
+        exit 0
     fi
 
     push_command="Push branch chore/app-version-${next_version_branch}"
@@ -202,6 +210,7 @@ bump_version() {
     else
         printf "${push_command}"
         print_cross
+        exit 0
     fi
     
     pull_request
@@ -219,7 +228,7 @@ pull_request() {
 
   to_user=$(echo $upstream | sed -e 's/.*[\/:]\([^/]*\)\/[^/]*$/\1/')
   from_user=$(echo $origin | sed -e 's/.*[\/:]\([^/]*\)\/[^/]*$/\1/')
-  repo=$(basename "git rev-parse --show-toplevel")
+  repo=$(basename `git rev-parse --show-toplevel`)
   from_branch=$(git rev-parse --abbrev-ref HEAD)
   open "https://github.com/$to_user/$repo/pull/new/$to_user:$base_branch...$from_user:$from_branch"
 }
