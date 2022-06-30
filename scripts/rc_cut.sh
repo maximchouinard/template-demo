@@ -147,7 +147,7 @@ bump_version() {
   if [[ $REPLY =~ ^[Yy]$ ]]; then
     checkout_command=$(git checkout -b chore/app-version-${next_version})
     sed -i "" "s/${previous_version}/${next_version}/g" package.json
-    commit_command=${git commit -am "updating version to ${next_version}"}
+    commit_command=$(git commit -am "updating version to ${next_version}")
     push_command=$(git push --set-upstream origin chore/app-version-${next_version})
     pull_request
   fi
