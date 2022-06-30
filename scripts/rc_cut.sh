@@ -141,14 +141,15 @@ bump_version() {
   printf "Updating app version \n"
   printf "\n"
 
+  ## TODO add validation package.json exist
   previous_version=$(jq -r '.version' package.json)
   read -p "Are you sure you want to replace version \"${previous_version}\" by \"${next_version}\"?" -n 1 -r
   echo    # (optional) move to a new line
   if [[ $REPLY =~ ^[Yy]$ ]]; then
-    checkout_command=$(git checkout -b chore/app-version-${next_version})
+    checkout_command=$(git checkout -b chore/app-version-${next_version_branch})
     sed -i "" "s/${previous_version}/${next_version}/g" package.json
     commit_command=$(git commit -am "updating version to ${next_version}")
-    push_command=$(git push --set-upstream origin chore/app-version-${next_version})
+    push_command=$(git push --set-upstream origin chore/app-version-${next_version_branch})
     pull_request
   fi
   
@@ -194,6 +195,7 @@ base_branch="develop"
 month="$(date +'%B')"
 faketime '2019-10-01' date
 next_version="$(date -v+1m +'%G.%m')"
+next_version_branch="$(date -v+1m +'%G-%m')"
 day="$(date +'%d')"
 full_day=$(format_day)
 year="$(date +'%G')" 
